@@ -2,6 +2,8 @@ require: rubocop-rails
 
 Style/Documentation:
   Enabled: false
+Metrics/BlockLength:
+  AllowedMethods: ['describe', 'context']
 Gemspec/DeprecatedAttributeAssignment: # new in 1.30
   Enabled: true
 Gemspec/DevelopmentDependencies: # new in 1.44

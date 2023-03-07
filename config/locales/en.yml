@@ -30,4 +30,7 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  people:
+    successfully_created: "Person was successfully created."
+    successfully_updated: "Person was successfully updated."
+    successfully_destroyed: "Person was successfully destroyed."
