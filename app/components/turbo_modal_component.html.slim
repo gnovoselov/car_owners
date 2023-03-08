@@ -1,0 +1,7 @@
+= turbo_frame_tag "modal" do
+  .modal-content.rounded-4.shadow[data={ controller: "turbo-modal", action: "turbo:submit-end->turbo-modal#submitEnd" }]
+    .modal-header.p-5.pb-4.border-bottom-0
+      h1.fw-bold.mb-0.fs-2 = @title
+      button.btn.btn-close[alt=t('actions.close') data={action: "turbo-modal#hideModal", 'bs-dismiss': "modal"} type="button"]
+    .modal-body.p-5.pt-0
+      = content

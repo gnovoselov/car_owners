@@ -11,6 +11,8 @@ require 'rspec/rails'
 require 'shoulda/matchers'
 require 'database_cleaner/active_record'
 require 'simplecov'
+require 'view_component/test_helpers'
+require 'capybara/rspec'
 
 SimpleCov.start 'rails'
 
@@ -55,6 +57,18 @@ RSpec.configure do |config|
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
+
+  config.include CommonHelpers
+  config.include FeatureHelpers, type: :feature
+  config.include ViewComponent::TestHelpers, type: :component
+  config.include ViewComponent::SystemTestHelpers, type: :component
+  config.include Capybara::RSpecMatchers, type: :component
+
+  # config.include Devise::Test::ControllerHelpers, type: :component
+
+  # config.before(:each, type: :component) do
+  #   @request = controller.request
+  # en
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and

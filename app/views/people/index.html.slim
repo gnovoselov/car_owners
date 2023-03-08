@@ -1,11 +1,9 @@
-p style="color: green" = notice
+.d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+  h1.h2 = t('people.title')
+  .btn-toolbar.mb-2.mb-md-0
+    .btn-group.me-2
+      = button_to t('people.add_new'), new_person_path, method: :get, data: { turbo_frame: 'modal', bs_toggle: 'modal', bs_target: '#modalDialog' }, class: "add-new-button btn btn-sm btn-outline-secondary"
 
-h1 People
+= render  "shared/system_messages"
 
-#people
-  - @people.each do |person|
-    == render person
-    p
-      = link_to "Show this person", person
-
-= link_to "New person", new_person_path
+= render "people_table", people: @people, pagy: @pagy

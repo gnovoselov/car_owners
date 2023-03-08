@@ -1,0 +1,17 @@
+- if people&.any?
+  #people-table.table-responsive
+    table.table.table-striped.table-sm
+      thead
+        tr
+          th #
+          th = t('people.table.headers.name')
+          th = t('people.table.headers.email')
+          th = t('people.table.headers.phone')
+          th = t('people.table.headers.car')
+          th
+      tbody#people-table-body
+        = render partial: "person_row", collection: people, as: :person
+    == pagy_bootstrap_nav(pagy)
+- else
+  #people-table.alert.alert-info.d-flex.justify-content-center.align-items-center
+    = t('people.no_people')

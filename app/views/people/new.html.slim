@@ -1,8 +1,2 @@
-h1 New person
-
-== render "form", person: @person
-
-br
-
-div
-  = link_to "Back to people", people_path
+= render TurboModalComponent.new(title: t('people.new_person')) do
+  == render "form", person: @person

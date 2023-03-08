@@ -1,10 +1,7 @@
 div id="#{dom_id person}"
   p
-    strong Name:
-    =< person.name
-  p
     strong Email:
     =< person.email
   p
     strong Phone:
-    =< person.phone
+    =< number_to_phone(person.phone)

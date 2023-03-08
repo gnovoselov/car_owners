@@ -32,3 +32,6 @@
 
 # Ignore SimpleCov folder
 coverage
+
+# Ignore npm packages
+node_modules

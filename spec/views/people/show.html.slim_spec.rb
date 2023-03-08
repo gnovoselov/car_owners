@@ -3,12 +3,16 @@
 require 'rails_helper'
 
 RSpec.describe 'people/show', type: :view do
-  before(:each) { assign(:person, create(:person)) }
+  let!(:person) { create(:person) }
 
-  it 'renders attributes in <p>' do
+  before do
+    assign(:person, person)
     render
-    expect(rendered).to match(/Name/)
-    expect(rendered).to match(/Email/)
-    expect(rendered).to match(/Phone/)
+  end
+
+  it 'renders person attributes' do
+    expect(rendered).to have_css 'h1', text: person.name
+    expect(rendered).to have_css "div[id=#{dom_id person}] p", text: person.email
+    expect(rendered).to have_css "div[id=#{dom_id person}] p", text: number_to_phone(person.phone)
   end
 end

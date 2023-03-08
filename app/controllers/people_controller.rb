@@ -2,10 +2,11 @@
 
 class PeopleController < ApplicationController
   before_action :set_person, only: %i[show edit update destroy]
+  before_action :ensure_frame_response, only: %i[new edit show]
 
   # GET /people or /people.json
   def index
-    @people = people_collection.all
+    @pagy, @people = load_all_people
   end
 
   # GET /people/1 or /people/1.json
@@ -25,11 +26,9 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       if @person.save
-        format.html { redirect_to person_url(@person), notice: t('people.successfully_created') }
-        format.json { render :show, status: :created, location: @person }
+        render_saved_person(format, :created)
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
+        render_error(format, :new)
       end
     end
   end
@@ -38,11 +37,9 @@ class PeopleController < ApplicationController
   def update
     respond_to do |format|
       if @person.update(person_params)
-        format.html { redirect_to person_url(@person), notice: t('people.successfully_updated') }
-        format.json { render :show, status: :ok, location: @person }
+        render_saved_person(format)
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @person.errors, status: :unprocessable_entity }
+        render_error(format, :edit)
       end
     end
   end
@@ -52,6 +49,7 @@ class PeopleController < ApplicationController
     @person.destroy
 
     respond_to do |format|
+      format.turbo_stream { turbo_stream_replace_table }
       format.html { redirect_to people_url, notice: t('people.successfully_destroyed') }
       format.json { head :no_content }
     end
@@ -59,13 +57,36 @@ class PeopleController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
+  def load_all_people
+    load_collection_paginated(people_collection.all)
+  end
+
+  def render_error(format, action)
+    format.html { render action, status: :unprocessable_entity }
+    format.json { render json: @person.errors, status: :unprocessable_entity }
+  end
+
+  def render_saved_person(format, status = :ok)
+    format.turbo_stream { turbo_stream_replace_table }
+    format.html { redirect_to person_url(@person), notice: t('people.successfully_saved') }
+    format.json { render :show, status:, location: @person }
+  end
+
+  def turbo_stream_replace_table
+    pagy, people = load_all_people
+    render turbo_stream: turbo_stream.replace('people-table', partial: 'people/people_table',
+                                                              locals: { people:, pagy: })
+  end
+
   def set_person
     @person = people_collection.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def person_params
     params.require(:person).permit(:name, :email, :phone)
+  end
+
+  def ensure_frame_response
+    redirect_to root_path unless turbo_frame_request?
   end
 end

@@ -30,7 +30,32 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  title: Car Owners
+  home: Home
+  login: Login
+  signup: Sign-up
+  actions:
+    close: Close
+    saving: Saving
+  table:
+    actions:
+      edit: Edit
+      destroy: Destroy
+      show: Show
+      are_you_sure: Are you sure?
   people:
+    successfully_saved: "Person was successfully saved."
     successfully_created: "Person was successfully created."
     successfully_updated: "Person was successfully updated."
     successfully_destroyed: "Person was successfully destroyed."
+    title: People
+    new_person: New Person
+    edit_person: Edit Person
+    add_new: Add new person
+    no_people: No people found
+    table:
+      headers:
+        name: Name
+        email: Email
+        phone: Phone
+        car: Car

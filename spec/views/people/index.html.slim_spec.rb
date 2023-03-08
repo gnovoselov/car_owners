@@ -3,13 +3,31 @@
 require 'rails_helper'
 
 RSpec.describe 'people/index', type: :view do
-  before(:each) { assign(:people, create_list(:person, 2)) }
+  let!(:people) { create_list(:person, 2) }
+  let(:row_selector) { '#people-table tbody tr[id]' }
 
-  it 'renders a list of people' do
+  before do
+    assign(:people, people)
+    assign(:pagy, mock_pagy)
     render
-    cell_selector = Rails::VERSION::STRING >= '7' ? 'div>p' : 'tr>td'
-    assert_select cell_selector, text: Regexp.new('Name'.to_s), count: 2
-    assert_select cell_selector, text: Regexp.new('Email'.to_s), count: 2
-    assert_select cell_selector, text: Regexp.new('Phone'.to_s), count: 2
+  end
+
+  it 'renders page title' do
+    expect(rendered).to have_css 'h1.h2', text: 'People'
+  end
+
+  it 'renders table with people data and actions' do
+    expect(rendered).to have_css row_selector, count: people.count
+    expect(rendered).to have_css "#{row_selector} .view-button", count: people.count
+    expect(rendered).to have_css "#{row_selector} .edit-button", count: people.count
+    expect(rendered).to have_css "#{row_selector} .delete-button", count: people.count
+  end
+
+  it 'renders pagination' do
+    expect(rendered).to have_css '.pagy-bootstrap-nav .pagination'
+  end
+
+  it 'renders new person button' do
+    expect(rendered).to have_css '.add-new-button'
   end
 end

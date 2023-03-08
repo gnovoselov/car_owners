@@ -59,6 +59,16 @@ gem 'faker'
 # Validate emails
 gem 'email_validator'
 
+# Bootstrap styles
+gem 'bootstrap', '~> 5.2.2'
+gem 'bootstrap-icons-helper'
+
+# Pagination
+gem 'pagy'
+
+# A framework for creating reusable view components
+gem 'view_component'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
@@ -93,6 +103,6 @@ group :test do
   gem 'database_cleaner-active_record'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 5.0'
-  gem 'webdrivers'
   gem 'simplecov', require: false
+  gem 'webdrivers'
 end

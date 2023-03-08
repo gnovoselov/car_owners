@@ -1,22 +1,11 @@
 = form_with(model: @person) do |form|
-  - if @person.errors.any?
-    div style="color: red"
-      h2 = "#{pluralize(@person.errors.count, "error")} prohibited this person from being saved:"
-      ul
-        - @person.errors.each do |error|
-          li = error.full_message
 
-  div
-    = form.label :name, style: "display: block"
-    = form.text_field :name
+  .row
+    = form_group_for form, :name, label: bootstrap_icon("person", width: 15, height: 15)
 
-  div
-    = form.label :email, style: "display: block"
-    = form.text_field :email
+    = form_group_for form, :email, label: bootstrap_icon("at", width: 15, height: 15)
 
-  div
-    = form.label :phone, style: "display: block"
-    = form.text_field :phone
+    = form_group_for form, :phone, label: bootstrap_icon("telephone", width: 15, height: 15)
 
-  div
-    = form.submit
+  .d-flex.justify-content-center.align-content-center.pt-3
+    = form.submit class:"btn btn-primary", data: { disable_with: t('actions.saving') }

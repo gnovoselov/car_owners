@@ -22,39 +22,97 @@ RSpec.describe '/people', type: :request do
 
   describe 'GET /show' do
     let!(:person) { create(:person) }
+    let(:headers) { {} }
 
-    before { get person_url(person) }
+    subject(:make_request) { get person_url(person), params: {}, headers: }
 
-    it 'renders a successful response' do
-      expect(response).to be_successful
+    it 'redirects to root path' do
+      make_request
+      expect(response).to redirect_to(root_path)
+    end
+
+    context 'when the person is not found' do
+      let!(:person) { 0 }
+
+      it 'raises a not found error' do
+        expect { make_request }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    context 'when getting a person via turbo stream' do
+      let(:headers) { turbo_frame_header }
+
+      before { make_request }
+
+      it 'renders a successful response' do
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include('<turbo-frame id="modal">')
+      end
     end
   end
 
   describe 'GET /new' do
-    before { get new_person_url }
+    let(:headers) { {} }
 
-    it 'renders a successful response' do
-      expect(response).to be_successful
+    subject(:make_request) { get new_person_url, params: {}, headers: }
+
+    it 'redirects to root path' do
+      make_request
+      expect(response).to redirect_to(root_path)
+    end
+
+    context 'when getting the form via turbo stream' do
+      let(:headers) { turbo_frame_header }
+
+      before { make_request }
+
+      it 'renders a successful response' do
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include('<turbo-frame id="modal">')
+      end
     end
   end
 
   describe 'GET /edit' do
     let!(:person) { create(:person) }
+    let(:headers) { {} }
 
-    before { get edit_person_url(person) }
+    subject(:make_request) { get edit_person_url(person), params: {}, headers: }
 
-    it 'renders a successful response' do
-      expect(response).to be_successful
+    it 'redirects to root path' do
+      make_request
+      expect(response).to redirect_to(root_path)
+    end
+
+    context 'when the person is not found' do
+      let!(:person) { 0 }
+
+      it 'raises a not found error' do
+        expect { make_request }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    context 'when getting a person via turbo stream' do
+      let(:headers) { turbo_frame_header }
+
+      before { make_request }
+
+      it 'renders a successful response' do
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include('<turbo-frame id="modal">')
+      end
     end
   end
 
   describe 'POST /create' do
+    let(:headers) { {} }
+
     subject(:post_person) do
-      post people_url, params: { person: params }
+      post people_url, params:, headers:
     end
 
     context 'with valid parameters' do
-      let(:params) { valid_attributes }
+      let(:params) { { person: valid_attributes } }
 
       it 'creates a new Person' do
         expect { post_person }.to change(described_model, :count).by(1)
@@ -66,11 +124,22 @@ RSpec.describe '/people', type: :request do
         it 'redirects to the created person' do
           expect(response).to redirect_to(person_url(described_model.last))
         end
+
+        context 'via turbo stream' do
+          let(:headers) { turbo_frame_header }
+          let(:params) { { person: valid_attributes, format: :turbo_stream } }
+
+          it 'renders a successful response' do
+            expect(response).to have_http_status(:ok)
+            expect(response.media_type).to eq Mime[:turbo_stream]
+            expect(response.body).to include('<turbo-stream action="replace" target="people-table">')
+          end
+        end
       end
     end
 
     context 'with invalid parameters' do
-      let(:params) { invalid_attributes }
+      let(:params) { { person: invalid_attributes } }
 
       it 'does not create a new Person' do
         expect { post_person }.to change(Person, :count).by(0)
@@ -88,26 +157,39 @@ RSpec.describe '/people', type: :request do
 
   describe 'PATCH /update' do
     let!(:person) { create(:person) }
+    let(:headers) { {} }
 
-    before do
-      patch person_url(person), params: { person: params }
+    subject(:patch_person) do
+      patch person_url(person), params:, headers:
     end
 
+    before { patch_person }
+
     context 'with valid parameters' do
-      let(:params) { valid_attributes }
+      let(:params) { { person: valid_attributes } }
 
       it 'updates the requested person' do
-        person.reload
-        expect(person.reload).to have_attributes(params)
+        expect(person.reload).to have_attributes(params[:person])
       end
 
       it 'redirects to the person' do
         expect(response).to redirect_to(person_url(person))
       end
+
+      context 'via turbo stream' do
+        let(:headers) { turbo_frame_header }
+        let(:params) { { person: valid_attributes, format: :turbo_stream } }
+
+        it 'renders a successful response' do
+          expect(response).to have_http_status(:ok)
+          expect(response.media_type).to eq Mime[:turbo_stream]
+          expect(response.body).to include('<turbo-stream action="replace" target="people-table">')
+        end
+      end
     end
 
     context 'with invalid parameters' do
-      let(:params) { invalid_attributes }
+      let(:params) { { person: invalid_attributes } }
 
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         expect(response).to have_http_status(:unprocessable_entity)
@@ -117,9 +199,11 @@ RSpec.describe '/people', type: :request do
 
   describe 'DELETE /destroy' do
     let!(:person) { create(:person) }
+    let(:headers) { {} }
+    let(:params) { {} }
 
     subject(:delete_person) do
-      delete person_url(person)
+      delete person_url(person), params:, headers:
     end
 
     it 'destroys the requested person' do
@@ -131,6 +215,17 @@ RSpec.describe '/people', type: :request do
 
       it 'redirects to the people list' do
         expect(response).to redirect_to(people_url)
+      end
+
+      context 'via turbo stream' do
+        let(:headers) { turbo_frame_header }
+        let(:params) { { person: valid_attributes, format: :turbo_stream } }
+
+        it 'renders a successful response' do
+          expect(response).to have_http_status(:ok)
+          expect(response.media_type).to eq Mime[:turbo_stream]
+          expect(response.body).to include('<turbo-stream action="replace" target="people-table">')
+        end
       end
     end
   end
