@@ -1,0 +1,24 @@
+.container.mt-5.text-center.d-flex.justify-content-center
+  .form-signin.w-5.m-auto
+    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      = bootstrap_icon "car-front-fill", width: 40, height: 40, class: 'mb-4'
+      h1.h3.mb-3.fw-normal
+        = t('please_sign_in')
+      .form-floating.mb-3
+        = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control'
+        = f.label :email
+      .form-floating.mb-3
+        = f.password_field :password, autocomplete: "current-password", class: 'form-control'
+        = f.label :password
+      - if devise_mapping.rememberable?
+        .checkbox.mb-3
+          = f.label :remember_me do
+            = f.check_box :remember_me
+            | &nbsp;
+            = t('remember_me')
+
+      .actions
+        = f.submit t('log_in'), class: 'w-100 btn btn-lg btn-primary'
+
+      .links.mt-3.d-flex.flex-column.align-items-center
+        = render "devise/shared/links"

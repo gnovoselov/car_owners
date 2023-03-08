@@ -1,0 +1,23 @@
+.container.mt-5.text-center.d-flex.justify-content-center
+  .form-signin.w-5.m-auto
+    = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+      = bootstrap_icon "car-front-fill", width: 40, height: 40, class: 'mb-4'
+      h1.h3.mb-3.fw-normal
+        = t('change_your_password')
+
+      = render "devise/shared/error_messages", resource: resource
+
+      .form-floating.mb-3
+        = f.password_field :password, autocomplete: "new-password", class: 'form-control'
+        = f.label :password, t('new_password')
+        - if @minimum_password_length
+          em.form-text = t('devise.shared.minimum_password_length', count: @minimum_password_length)
+      .form-floating.mb-3
+        = f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control'
+        = f.label :password_confirmation, t('confirm_new_password')
+
+      .actions
+        = f.submit t('change_my_password'), class: 'w-100 btn btn-lg btn-primary'
+
+      .links.mt-3.d-flex.flex-column.align-items-center
+        = render "devise/shared/links"

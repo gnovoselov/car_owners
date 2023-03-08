@@ -1,0 +1,15 @@
+.container.mt-5.text-center.d-flex.justify-content-center
+  .form-signin.w-5.m-auto
+    = form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
+      = bootstrap_icon "car-front-fill", width: 40, height: 40, class: 'mb-4'
+      h1.h3.mb-3.fw-normal
+        = t('resend_confirmation_instructions')
+      .form-floating.mb-3
+        = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control'
+        = f.label :email
+
+      .actions
+        = f.submit t('resend_confirmation_instructions'), class: 'w-100 btn btn-lg btn-primary'
+
+      .links.mt-3.d-flex.flex-column.align-items-center
+        = render "devise/shared/links"

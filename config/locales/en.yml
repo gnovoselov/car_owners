@@ -32,14 +32,29 @@
 en:
   title: Car Owners
   home: Home
-  login: Login
-  signup: Sign-up
+  log_in: Log in
+  remember_me: Remember me
+  sign_up: Sign up
+  sign_out: Sign out
+  please_sign_in: Please sign in
+  forgot_your_password: Forgot your password?
+  send_reset_password_instructions: Send me reset password instructions
+  resend_confirmation_instructions: Resend confirmation instructions
+  resend_unlock_instructions: Resend unlock instructions
+  change_your_password: Change your password
+  change_my_password: Change my password
+  new_password: New password
+  confirm_new_password: Confirm new password
+  waiting_confirmation_for: "Currently waiting confirmation for: %{email}"
+  leave_blank_if_no_change: Leave blank if you don't want to change it
+  need_current_password: We need your current password to confirm your changes
   actions:
     close: Close
     saving: Saving
   table:
     actions:
       edit: Edit
+      update: Update
       destroy: Destroy
       show: Show
       are_you_sure: Are you sure?

@@ -1,0 +1,15 @@
+- if user_signed_in?
+  .d-flex.flex-wrap.align-items-center.justify-content-center.justify-content-lg-start
+    a.d-flex.me-3.align-items-center.mb-2.mb-lg-0.text-dark.text-decoration-none[href=root_path]
+      = bootstrap_icon "car-front-fill", width: 40, height: 40, fill: "white"
+    ul.nav.col-12.col-lg-auto.me-lg-auto.mb-2.justify-content-center.mb-md-0
+      li.nav-item
+        a.nav-link.px-2.text-secondary[href=root_path]
+          |  #{t('home')}
+      li.nav-item
+        a.nav-link.px-2.text-white[href=root_path]
+          |  #{t('people.title')}
+    .text-end.me-5
+      span = current_user.email
+    .text-end
+      = button_to t('sign_out'), destroy_user_session_path, method: :delete, type: :button, class: 'btn btn-warning me-2'

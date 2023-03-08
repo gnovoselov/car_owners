@@ -4,6 +4,4 @@
     .btn-group.me-2
       = button_to t('people.add_new'), new_person_path, method: :get, data: { turbo_frame: 'modal', bs_toggle: 'modal', bs_target: '#modalDialog' }, class: "add-new-button btn btn-sm btn-outline-secondary"
 
-= render  "shared/system_messages"
-
 = render "people_table", people: @people, pagy: @pagy

@@ -108,7 +108,7 @@ RSpec.describe FormHelper, type: :helper do
       allow(helper).to receive(:input_group_for).and_return('')
     end
 
-    it { is_expected.to include(%Q{div class="field-#{field}-container col-12 mb-3"}) }
+    it { is_expected.to include(%(div class="field-#{field}-container col-12 mb-3")) }
 
     it { is_expected.to include('label class="form-label"') }
 

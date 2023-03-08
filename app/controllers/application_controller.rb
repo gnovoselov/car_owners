@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
   PER_PAGE = 20
   DEFAULT_PAGE = 1
 
+  before_action :authenticate_user!
+
+  protect_from_forgery with: :reset_session, prepend: true
+
   private
 
   def per_page

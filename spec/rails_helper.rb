@@ -64,11 +64,19 @@ RSpec.configure do |config|
   config.include ViewComponent::SystemTestHelpers, type: :component
   config.include Capybara::RSpecMatchers, type: :component
 
-  # config.include Devise::Test::ControllerHelpers, type: :component
+  # Devise helpers
+  config.include Devise::Test::IntegrationHelpers, type: :component
+  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Devise::Test::IntegrationHelpers, type: :view
+  config.include Devise::Test::IntegrationHelpers, type: :feature
 
-  # config.before(:each, type: :component) do
-  #   @request = controller.request
-  # en
+  config.before(:each, type: :component) do
+    sign_in create(:user)
+  end
+
+  config.before(:each, type: :feature) do
+    sign_in create(:user)
+  end
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
