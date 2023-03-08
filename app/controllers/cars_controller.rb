@@ -79,7 +79,7 @@ class CarsController < ApplicationController
   end
 
   def set_car
-    @car = cars_collection.find(params[:id])
+    @car = cars_collection.includes(:ownerships, :owner).find(params[:id])
   end
 
   def car_params

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_08_111352) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_08_230955) do
   create_table "cars", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "model"
     t.string "make"
@@ -21,6 +21,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_08_111352) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["owner_id"], name: "index_cars_on_owner_id"
+  end
+
+  create_table "ownerships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.date "purchased_at"
+    t.decimal "price", precision: 10
+    t.integer "milage"
+    t.bigint "person_id", null: false
+    t.bigint "car_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["car_id"], name: "index_ownerships_on_car_id"
+    t.index ["person_id"], name: "index_ownerships_on_person_id"
   end
 
   create_table "people", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -45,4 +57,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_08_111352) do
   end
 
   add_foreign_key "cars", "people", column: "owner_id"
+  add_foreign_key "ownerships", "cars"
+  add_foreign_key "ownerships", "people"
 end

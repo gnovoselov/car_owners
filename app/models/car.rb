@@ -24,6 +24,7 @@
 #
 class Car < ApplicationRecord
   belongs_to :owner, class_name: 'Person'
+  has_many :ownerships, dependent: :nullify, -> { order(purchased_at: :desc) }
 
   validates :model, :make, :color, :milage, :owner_id, presence: true
   validates :milage, numericality: { greater_than_or_equal_to: 0, less_than: 1_000_000 }

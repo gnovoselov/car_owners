@@ -40,7 +40,7 @@ RSpec.describe Car, type: :model do
   end
 
   describe 'Associations' do
-    xit { is_expected.to have_many(:ownerships) }
+    it { is_expected.to have_many(:ownerships).dependent(:nullify).order( purchased_at: :desc ) }
     it { is_expected.to belong_to(:owner).class_name('Person') }
   end
 
@@ -50,11 +50,12 @@ RSpec.describe Car, type: :model do
     it { is_expected.to validate_presence_of(:color) }
     it { is_expected.to validate_presence_of(:milage) }
     it { is_expected.to validate_presence_of(:owner_id) }
-    it { is_expected.not_to allow_value(2_835_868_941).for(:milage) }
     it do
       is_expected.to validate_numericality_of(:milage)
         .is_greater_than_or_equal_to(0)
         .is_less_than(1_000_000)
     end
+
+    it { is_expected.not_to allow_value(2_835_868_941).for(:milage) }
   end
 end
