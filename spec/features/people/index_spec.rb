@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Viewing people list', type: :feature do
+RSpec.describe 'People list', type: :feature do
   context 'when there are no people saved' do
     before { visit people_path }
 

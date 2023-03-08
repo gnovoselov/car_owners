@@ -32,8 +32,11 @@
 en:
   title: Car Owners
   home: Home
+  yes: Yes
+  no: No
   log_in: Log in
   remember_me: Remember me
+  select_one: Select one...
   sign_up: Sign up
   sign_out: Sign out
   please_sign_in: Please sign in
@@ -58,6 +61,24 @@ en:
       destroy: Destroy
       show: Show
       are_you_sure: Are you sure?
+  cars:
+    successfully_saved: "Car was successfully saved."
+    successfully_created: "Car was successfully created."
+    successfully_updated: "Car was successfully updated."
+    successfully_destroyed: "Car was successfully destroyed."
+    title: Cars
+    new_car: New Car
+    edit_car: Edit Car
+    add_new: Add new car
+    no_cars: No cars found
+    for_sale: For sale
+    table:
+      headers:
+        name: Car
+        color: Color
+        milage: Milage
+        owner: Owner
+        for_sale: For sale
   people:
     successfully_saved: "Person was successfully saved."
     successfully_created: "Person was successfully created."

@@ -1,0 +1,17 @@
+= form_with(model: @car) do |form|
+
+  .row
+    .field-is_for_sale-container.col-12.mb-2
+      .form-check.form-switch.form-switch-md.d-flex.justify-content-start.align-items-center
+        = form.check_box :is_for_sale, role: 'switch', class: 'form-check-input'
+        = form.label :is_for_sale, class: 'form-check-label ms-3' do
+          = t('cars.for_sale')
+
+    = form_group_for form, :make, label: bootstrap_icon("car-front", width: 15, height: 15)
+    = form_group_for form, :model, label: bootstrap_icon("car-front-fill", width: 15, height: 15)
+    = form_group_for form, :color, label: bootstrap_icon("palette2", width: 15, height: 15)
+    = form_group_for form, :milage, label: bootstrap_icon("speedometer2", width: 15, height: 15)
+    = form_group_for form, :owner_id, type: :select, collection: owners_for_select(@car, owner_class(@car)), label: bootstrap_icon("person", width: 15, height: 15)
+
+  .d-flex.justify-content-center.align-content-center.pt-3
+    = form.submit class:"btn btn-primary", data: { disable_with: t('actions.saving') }

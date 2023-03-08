@@ -71,11 +71,13 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :feature
 
   config.before(:each, type: :component) do
-    sign_in create(:user)
+    @current_user = create(:user)
+    sign_in @current_user
   end
 
   config.before(:each, type: :feature) do
-    sign_in create(:user)
+    @current_user = create(:user)
+    sign_in @current_user
   end
 
   # RSpec Rails can automatically mix in different behaviours to your tests

@@ -14,8 +14,7 @@
         .checkbox.mb-3
           = f.label :remember_me do
             = f.check_box :remember_me
-            | &nbsp;
-            = t('remember_me')
+            =< t('remember_me')
 
       .actions
         = f.submit t('log_in'), class: 'w-100 btn btn-lg btn-primary'

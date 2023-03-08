@@ -58,7 +58,7 @@ class PeopleController < ApplicationController
   private
 
   def load_all_people
-    load_collection_paginated(people_collection.all)
+    load_collection_paginated(people_collection.includes(:cars).all)
   end
 
   def render_error(format, action)

@@ -31,11 +31,15 @@ RSpec.describe Person, type: :model do
 
   describe 'Associations' do
     xit { is_expected.to have_many(:ownerships) }
-    xit { is_expected.to have_many(:cars).through(:ownerships) }
+    it do
+      is_expected.to have_many(:cars).inverse_of(:owner)
+                                     .with_foreign_key(:owner_id)
+                                     .dependent(:nullify)
+    end
   end
 
   describe 'Validations' do
-    let(:valid_email) { Faker::Internet.email }
+    let(:valid_email) { generate(:email) }
     let(:invalid_email) { "#{valid_email}_invalid" }
 
     it { is_expected.to validate_presence_of(:name) }

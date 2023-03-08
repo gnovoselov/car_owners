@@ -4,6 +4,11 @@ tr.person-row[id=dom_id(person)]
   td = person.email
   td = number_to_phone(person.phone)
   td
+    - if person.cars.any?
+      .vstack.gap-1
+        - person.cars.each do |car|
+          .car-item
+            = car_info_link(car)
   td.d-flex.justify-content-evenly.flex-wrap.flex-md-nowrap.align-items-center
     = button_to person, class: 'view-button border border-0 bg-transparent', alt: t('table.actions.show'), method: :get, data: { turbo_frame: 'modal', bs_toggle: 'modal', bs_target: '#modalDialog' } do
       = bootstrap_icon "eye", width: 20, height: 20, fill: "grey"

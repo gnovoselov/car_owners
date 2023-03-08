@@ -7,12 +7,11 @@ module FormHelper
 
   def input_group_for(form, field, opts = {})
     label = opts.fetch(:label) { t(field) }
-    type = opts.fetch(:type, :text_field)
     has_errors = form.object.errors[field].present?
 
     content_tag :div, class: 'input-group has-validation' do
       concat content_tag(:span, label, class: 'input-group-text')
-      concat form.public_send(type, field, class: "form-control #{'is-invalid' if has_errors}")
+      concat render_field(form, field, has_errors, opts)
       concat errors_for(form, field) if has_errors
     end
   end
@@ -22,5 +21,24 @@ module FormHelper
       concat form.label(field, class: 'form-label')
       concat input_group_for(form, field, opts)
     end
+  end
+
+  def render_field(form, field, has_errors, opts = {})
+    type = opts.fetch(:type, :text_field)
+
+    case type
+    when :select then render_select(form, field, has_errors, opts)
+    else render_text_field(form, field, has_errors)
+    end
+  end
+
+  def render_select(form, field, has_errors, opts = {})
+    collection = opts.fetch(:collection, [])
+
+    form.select field, collection, {}, class: "form-control form-select #{'is-invalid' if has_errors}"
+  end
+
+  def render_text_field(form, field, has_errors)
+    form.text_field(field, class: "form-control #{'is-invalid' if has_errors}")
   end
 end

@@ -4,8 +4,7 @@
       = bootstrap_icon "car-front-fill", width: 40, height: 40, class: 'mb-4'
       h1.h3.mb-3.fw-normal
         = t('table.actions.edit')
-        | &nbsp;
-        = resource_name.to_s.humanize
+        =< resource_name.to_s.humanize
 
       = render "devise/shared/error_messages", resource: resource
 
@@ -38,7 +37,6 @@
       h3.h4 = t('Cancel my account')
       div
         = t('unhappy')
-        | &nbsp;
-        = button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete
+        =< button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete
 
       = link_to "Back", :back

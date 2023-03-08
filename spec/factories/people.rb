@@ -18,11 +18,11 @@
 FactoryBot.define do
   factory :person do
     name { Faker::Name.name }
-    email { Faker::Internet.email }
+    email
     phone { Faker::PhoneNumber.phone_number }
 
     trait :invalid_email do
-      email { "#{Faker::Internet.email}_invalid" }
+      email { "#{generate(:email)}_invalid" }
     end
   end
 end

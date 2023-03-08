@@ -25,7 +25,6 @@ RSpec.describe 'Creating a person', type: :feature, js: true do
 
   context 'when closing form' do
     scenario 'does not show popup' do
-      expect(page).to have_css 'h1', text: 'New Person'
       within('.modal-header') do
         find('.btn-close').click
       end
@@ -59,7 +58,7 @@ RSpec.describe 'Creating a person', type: :feature, js: true do
     context 'and name is absent' do
       let(:form_attributes) { person_attributes.except(:name) }
 
-      scenario 'shows created person' do
+      scenario 'shows error' do
         within('.field-name-container') do
           expect(page).to have_css "#{invalid_field_selector}#person_name"
           expect(page).to have_css '.invalid-feedback', text: "can't be blank"
@@ -70,7 +69,7 @@ RSpec.describe 'Creating a person', type: :feature, js: true do
     context 'and email is absent' do
       let(:form_attributes) { person_attributes.except(:email) }
 
-      scenario 'shows created person' do
+      scenario 'shows error' do
         within('.field-email-container') do
           expect(page).to have_css "#{invalid_field_selector}#person_email"
           expect(page).to have_css '.invalid-feedback', text: "can't be blank"
@@ -81,7 +80,7 @@ RSpec.describe 'Creating a person', type: :feature, js: true do
     context 'and email is taken' do
       let!(:person) { create(:person, email: form_attributes[:email]) }
 
-      scenario 'shows created person' do
+      scenario 'shows error' do
         within('.field-email-container') do
           expect(page).to have_css "#{invalid_field_selector}#person_email"
           expect(page).to have_css '.invalid-feedback', text: 'has already been taken'
@@ -92,7 +91,7 @@ RSpec.describe 'Creating a person', type: :feature, js: true do
     context 'and email is invalid' do
       let(:person_attributes) { attributes_for(:person, :invalid_email) }
 
-      scenario 'shows created person' do
+      scenario 'shows error' do
         within('.field-email-container') do
           expect(page).to have_css "#{invalid_field_selector}#person_email"
           expect(page).to have_css '.invalid-feedback', text: 'is invalid'

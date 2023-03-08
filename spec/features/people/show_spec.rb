@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Viewing person data', type: :feature, js: true do
+RSpec.describe 'Personal card', type: :feature, js: true do
   let!(:person) { create(:person) }
   let(:wait_for_popup) do
     lambda do

@@ -1,0 +1,18 @@
+- if cars&.any?
+  #cars-table.table-responsive
+    table.table.table-striped.table-sm
+      thead
+        tr
+          th #
+          th = t('cars.table.headers.name')
+          th = t('cars.table.headers.color')
+          th = t('cars.table.headers.milage')
+          th = t('cars.table.headers.for_sale')
+          th = t('cars.table.headers.owner')
+          th
+      tbody#cars-table-body
+        = render partial: "car_row", collection: cars, as: :car
+    == pagy_bootstrap_nav(pagy)
+- else
+  #cars-table.alert.alert-info.d-flex.justify-content-center.align-items-center
+    = t('cars.no_cars')

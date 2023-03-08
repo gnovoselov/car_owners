@@ -8,6 +8,7 @@ RSpec.describe FormHelper, type: :helper do
     double(
       'form',
       text_field: rendered_field,
+      select: rendered_field,
       object: double(
         'object',
         errors: double(
@@ -38,6 +39,7 @@ RSpec.describe FormHelper, type: :helper do
 
     before do
       allow(helper).to receive(:errors_for).and_return('')
+      allow(helper).to receive(:render_field).and_return('')
     end
 
     it { is_expected.to include('div class="input-group has-validation"') }
@@ -50,6 +52,11 @@ RSpec.describe FormHelper, type: :helper do
 
     it 'calls errors_for' do
       expect(helper).to receive(:errors_for).with(form, field)
+      subject
+    end
+
+    it 'calls render_field with errors' do
+      expect(helper).to receive(:render_field).with(form, field, true, options)
       subject
     end
 
@@ -73,17 +80,8 @@ RSpec.describe FormHelper, type: :helper do
         subject
       end
 
-      it 'calls form_control_for with the right field type' do
-        expect(form).to receive(:text_field).with(field, class: 'form-control ')
-        subject
-      end
-    end
-
-    context 'when type is passed' do
-      let(:options) { { type: :check_box } }
-
-      it 'calls form_control_for with the right field type' do
-        expect(form).to receive(:check_box).with(field, class: 'form-control is-invalid')
+      it 'calls render_field with no errors' do
+        expect(helper).to receive(:render_field).with(form, field, false, options)
         subject
       end
     end
@@ -115,6 +113,96 @@ RSpec.describe FormHelper, type: :helper do
     it 'calls input_group_for' do
       expect(helper).to receive(:input_group_for).with(form, field, options)
       subject
+    end
+  end
+
+  describe '.render_field' do
+    let(:field) { :field }
+    let(:has_errors) { Faker::Boolean.boolean }
+    let(:options) { {} }
+
+    subject { helper.render_field(form, field, has_errors, options) }
+
+    before do
+      allow(helper).to receive(:render_select).and_return('')
+      allow(helper).to receive(:render_text_field).and_return('')
+    end
+
+    it 'calls render_text_field' do
+      expect(helper).to receive(:render_text_field).with(form, field, has_errors)
+      subject
+    end
+
+    context 'when type is passed' do
+      let(:options) { { type: field_type } }
+      let(:field_type) { :check_box }
+
+      it 'calls render_text_field' do
+        expect(helper).to receive(:render_text_field).with(form, field, has_errors)
+        subject
+      end
+
+      context 'and equals select' do
+        let(:field_type) { :select }
+
+        it 'calls render_select' do
+          expect(helper).to receive(:render_select).with(form, field, has_errors, options)
+          subject
+        end
+      end
+    end
+  end
+
+  describe '.render_select' do
+    let(:field) { :field }
+    let(:has_errors) { false }
+    let(:options) { {} }
+
+    subject { helper.render_select(form, field, has_errors, options) }
+
+    it 'renders select' do
+      expect(form).to receive(:select).with(field, [], {}, class: 'form-control form-select ')
+      subject
+    end
+
+    context 'when there are errors' do
+      let(:has_errors) { true }
+
+      it 'renders text_field with error class' do
+        expect(form).to receive(:select).with(field, [], {}, class: 'form-control form-select is-invalid')
+        subject
+      end
+    end
+
+    context 'when collection passed' do
+      let(:people) { build_list(:person, 2) }
+      let(:options) { { collection: people } }
+
+      it 'renders text_field with error class' do
+        expect(form).to receive(:select).with(field, people, {}, class: 'form-control form-select ')
+        subject
+      end
+    end
+  end
+
+  describe '.render_text_field' do
+    let(:field) { :field }
+    let(:has_errors) { false }
+
+    subject { helper.render_text_field(form, field, has_errors) }
+
+    it 'renders text_field' do
+      expect(form).to receive(:text_field).with(field, class: 'form-control ')
+      subject
+    end
+
+    context 'when there are errors' do
+      let(:has_errors) { true }
+
+      it 'renders text_field with error class' do
+        expect(form).to receive(:text_field).with(field, class: 'form-control is-invalid')
+        subject
+      end
     end
   end
 end

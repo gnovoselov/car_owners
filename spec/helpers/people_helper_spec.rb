@@ -2,16 +2,21 @@
 
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the PeopleHelper. For example:
-#
-# describe PeopleHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe PeopleHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:person) { create(:person) }
+
+  describe '.owner_info_link' do
+    let(:block) { proc { person.name } }
+
+    subject { helper.owner_info_link(person) }
+
+    before do
+      allow(helper).to receive(:turbo_frame_button)
+      subject
+    end
+
+    it 'renders a turbo frame button' do
+      expect(helper).to have_received(:turbo_frame_button).with(person, 'view-owner-button', &block)
+    end
+  end
 end
