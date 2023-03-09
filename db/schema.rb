@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_08_230955) do
     t.string "make"
     t.string "color"
     t.integer "milage"
-    t.bigint "owner_id", null: false
+    t.bigint "owner_id"
     t.boolean "is_for_sale", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
