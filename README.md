@@ -33,8 +33,22 @@ Your application must have endpoints for:
 
 1. Clone the repository: `git clone https://github.com/gnovoselov/car_owners.git`
 2. Build the container: `docker-compose build`
-3. Create the DB and seed it with data: `docker-compose run app rails db:create db:migrate db:seed `
+3. Create the DB and seed it with data: `docker-compose run app rails db:create db:migrate db:seed`
 4. Start the server: `docker-compose up`
+
+### Keeping gems up to date
+
+To check gem versions and find potential vulnerabilities use
+
+```bash
+$ docker-compose run app bundle-audit check
+```
+
+To upgrade outdated gems run
+
+```bash
+$ docker-compose run app bundle-audit check --update
+```
 
 ## Usage
 
