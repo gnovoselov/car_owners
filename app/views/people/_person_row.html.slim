@@ -9,10 +9,11 @@ tr.person-row[id=dom_id(person)]
         - person.cars.each do |car|
           .car-item
             = car_info_link(car)
-  td.d-flex.justify-content-evenly.flex-wrap.flex-md-nowrap.align-items-center
-    = button_to person, class: 'view-button border border-0 bg-transparent', alt: t('table.actions.show'), method: :get, data: { turbo_frame: 'modal', bs_toggle: 'modal', bs_target: '#modalDialog' } do
-      = bootstrap_icon "eye", width: 20, height: 20, fill: "grey"
-    = button_to edit_person_path(person), class: 'edit-button border border-0 bg-transparent', alt: t('table.actions.edit'), method: :get, data: { turbo_frame: 'modal', bs_toggle: 'modal', bs_target: '#modalDialog' } do
-      = bootstrap_icon "pencil-square", width: 20, height: 20, fill: "grey"
-    = button_to person_path(person, page: params[:page]), alt: t('table.actions.destroy'), class: 'delete-button border border-0 bg-transparent', method: :delete, data: { 'turbo-method': :delete, turbo_confirm: t('table.actions.are_you_sure') } do
-      = bootstrap_icon "trash-fill", width: 20, height: 20, fill: "grey"
+  td
+    .d-flex.justify-content-evenly.flex-wrap.flex-md-nowrap.align-items-center
+      = button_to person, class: 'view-button border border-0 bg-transparent', alt: t('table.actions.show'), method: :get, data: { turbo_frame: 'modal', bs_toggle: 'modal', bs_target: '#modalDialog' } do
+        = bootstrap_icon "eye", width: 20, height: 20, fill: "grey"
+      = button_to edit_person_path(person), class: 'edit-button border border-0 bg-transparent', alt: t('table.actions.edit'), method: :get, data: { turbo_frame: 'modal', bs_toggle: 'modal', bs_target: '#modalDialog' } do
+        = bootstrap_icon "pencil-square", width: 20, height: 20, fill: "grey"
+      = button_to person_path(person, page: params[:page]), alt: t('table.actions.destroy'), class: 'delete-button border border-0 bg-transparent', method: :delete, data: { 'turbo-method': :delete, turbo_confirm: t('table.actions.are_you_sure') } do
+        = bootstrap_icon "trash-fill", width: 20, height: 20, fill: "grey"

@@ -25,10 +25,10 @@ module CarsHelper
     car.class.reflect_on_association(:owner).klass
   end
 
-  def owners_for_select(car, people_collection)
+  def owners_for_select(car)
     options_for_select(
       [[t('select_one'), '']] +
-        people_collection.all.map { |person| [person.name, person.id] },
+        owner_class(car).order(:name).map { |person| [person.name, person.id] },
       car.owner_id
     )
   end

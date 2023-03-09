@@ -17,7 +17,7 @@
 #
 class Person < ApplicationRecord
   has_many :cars, inverse_of: :owner, foreign_key: :owner_id, dependent: :nullify
-  has_many :ownerships, dependent: :nullify, -> { order(purchased_at: :desc) }
+  has_many :ownerships, -> { order(purchased_at: :desc) }, inverse_of: :person, dependent: :destroy
 
   validates :name, presence: true
   validates :email, presence: true,

@@ -12,7 +12,7 @@
 #  model       :string(255)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  owner_id    :bigint           not null
+#  owner_id    :bigint
 #
 # Indexes
 #

@@ -79,7 +79,7 @@ class PeopleController < ApplicationController
   end
 
   def set_person
-    @person = people_collection.includes(:ownerships, :car).find(params[:id])
+    @person = people_collection.includes(:ownerships, :cars).find(params[:id])
   end
 
   def person_params

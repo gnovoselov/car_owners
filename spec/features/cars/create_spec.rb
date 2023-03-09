@@ -49,6 +49,17 @@ RSpec.describe 'Creating a car', type: :feature, js: true do
       end
     end
 
+    context 'and owner is absent' do
+      let(:select_owner) { false }
+
+      scenario 'shows created car' do
+        within('#cars-table') do
+          expect(page).to have_css 'td', text: "#{form_attributes[:make]} #{form_attributes[:model]}"
+          expect(page).to have_css 'td', text: form_attributes[:color]
+        end
+      end
+    end
+
     context 'and make is absent' do
       let(:form_attributes) { car_attributes.except(:make) }
 
@@ -100,17 +111,6 @@ RSpec.describe 'Creating a car', type: :feature, js: true do
         within('.field-milage-container') do
           expect(page).to have_css "#{invalid_field_selector}#car_milage"
           expect(page).to have_css '.invalid-feedback', text: 'must be greater than or equal to 0'
-        end
-      end
-    end
-
-    context 'and owner is absent' do
-      let(:select_owner) { false }
-
-      scenario 'shows error' do
-        within('.field-owner_id-container') do
-          expect(page).to have_css "#{invalid_field_selector}#car_owner_id"
-          expect(page).to have_css '.invalid-feedback', text: "can't be blank"
         end
       end
     end

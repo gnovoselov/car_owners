@@ -12,7 +12,7 @@
 #  model       :string(255)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  owner_id    :bigint           not null
+#  owner_id    :bigint
 #
 # Indexes
 #
@@ -23,9 +23,9 @@
 #  fk_rails_...  (owner_id => people.id)
 #
 class Car < ApplicationRecord
-  belongs_to :owner, class_name: 'Person'
-  has_many :ownerships, dependent: :nullify, -> { order(purchased_at: :desc) }
+  belongs_to :owner, class_name: 'Person', optional: true
+  has_many :ownerships, -> { order(purchased_at: :desc) }, inverse_of: :car, dependent: :destroy
 
-  validates :model, :make, :color, :milage, :owner_id, presence: true
+  validates :model, :make, :color, :milage, presence: true
   validates :milage, numericality: { greater_than_or_equal_to: 0, less_than: 1_000_000 }
 end

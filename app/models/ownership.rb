@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: ownerships
@@ -25,7 +27,7 @@ class Ownership < ApplicationRecord
   belongs_to :person
   belongs_to :car
 
-  validates_presence_of :purchased_at, :price, :milage, :person_id, :car_id
-  validates :purchased_at, comparison: { less_than_or_equal_to: Date.today }
+  validates :purchased_at, :price, :milage, :person_id, :car_id, presence: true
+  validates :purchased_at, comparison: { less_than_or_equal_to: Time.zone.today }
   validates :milage, numericality: { greater_than_or_equal_to: 0, less_than: 1_000_000 }
 end

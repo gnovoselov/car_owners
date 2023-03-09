@@ -78,7 +78,7 @@ RSpec.describe CarsHelper, type: :helper do
       ]
     end
 
-    subject { helper.owners_for_select(car, people_collection) }
+    subject { helper.owners_for_select(car) }
 
     before { allow(helper).to receive(:options_for_select) }
 

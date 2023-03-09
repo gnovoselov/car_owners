@@ -5,9 +5,10 @@ div id="#{dom_id car}"
   p
     strong Milage:
     =< number_with_delimiter(car.milage, delimiter: ',')
-  p
-    strong Owner:
-    =< car.owner.name
+  - if car.owner.present?
+    p
+      strong Owner:
+      =< car.owner.name
   p
     strong Is for sale:
     =< car.is_for_sale ? t('yes') : t('no')

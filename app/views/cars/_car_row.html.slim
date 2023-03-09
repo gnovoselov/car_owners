@@ -4,7 +4,7 @@ tr.car-row[id=dom_id(car)]
   td = car.color
   td = number_with_delimiter(car.milage, delimiter: ',')
   td.ps-4 = car_for_sale(car)
-  td = owner_info_link(car.owner)
+  td = owner_info_link(car.owner) if car.owner.present?
   td.d-flex.justify-content-evenly.flex-wrap.flex-md-nowrap.align-items-center
     = button_to car, class: 'view-button border border-0 bg-transparent', alt: t('table.actions.show'), method: :get, data: { turbo_frame: 'modal', bs_toggle: 'modal', bs_target: '#modalDialog' } do
       = bootstrap_icon "eye", width: 20, height: 20, fill: "grey"

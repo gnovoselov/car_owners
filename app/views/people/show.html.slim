@@ -1,2 +1,2 @@
-= render TurboModalComponent.new(title: @person.name) do
+= render TurboModalComponent.new(title: "##{@person.id} #{@person.name}") do
   == render @person

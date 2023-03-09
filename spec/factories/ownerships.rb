@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: ownerships
@@ -23,7 +25,7 @@
 #
 FactoryBot.define do
   factory :ownership do
-    purchased_at { Faker::Date.backward(years: 15) }
+    purchased_at { Faker::Date.between(from: 15.years.ago, to: Time.zone.today) }
     price { Faker::Commerce.price(range: 100..1_000_000) }
     milage { Faker::Vehicle.mileage }
     person

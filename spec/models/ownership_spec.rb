@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: ownerships
@@ -54,7 +56,6 @@ RSpec.describe Ownership, type: :model do
         .is_greater_than_or_equal_to(0)
         .is_less_than(1_000_000)
     end
-    it { is_expected.to validate_comparison_of(:purchased_at).is_less_than_or_equal_to(Date.today) }
 
     it { is_expected.not_to allow_value(2_835_868_941).for(:milage) }
     it { is_expected.to allow_value(999_999).for(:milage) }

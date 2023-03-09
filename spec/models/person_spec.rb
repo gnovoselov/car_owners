@@ -30,7 +30,12 @@ RSpec.describe Person, type: :model do
   end
 
   describe 'Associations' do
-    it { is_expected.to have_many(:ownerships).dependent(:nullify).order( purchased_at: :desc ) }
+    it do
+      is_expected.to have_many(:ownerships).inverse_of(:person)
+                                           .dependent(:destroy)
+                                           .order(purchased_at: :desc)
+    end
+
     it do
       is_expected.to have_many(:cars).inverse_of(:owner)
                                      .with_foreign_key(:owner_id)

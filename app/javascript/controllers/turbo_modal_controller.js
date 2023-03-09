@@ -11,7 +11,8 @@ export default class extends Controller {
   // action: "turbo:submit-end->turbo-modal#submitEnd"
   submitEnd(e) {
     if (e.detail.success) {
-      this.hideModal()
+      const closeButton = document.getElementById('modalClose')
+      closeButton.click()
     }
   }
 }
