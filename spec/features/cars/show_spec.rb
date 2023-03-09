@@ -20,9 +20,24 @@ RSpec.describe 'Car data', type: :feature, js: true do
 
   scenario 'shows car data' do
     within(".modal-body #car_#{car.id}") do
-      expect(page).to have_css 'p', text: car.color
-      expect(page).to have_css 'p', text: car.owner.name
-      expect(page).to have_css 'p', text: car.is_for_sale ? 'Yes' : 'No'
+      expect(page).to have_css '.hstack', text: car.color
+      expect(page).to have_css '.hstack', text: car.owner.name
+      expect(page).to have_css '.hstack', text: 'For sale' if car.is_for_sale
+      expect(page).not_to have_css 'h6', text: 'Ownership history'
+    end
+  end
+
+  context 'when a car had other owners in the past' do
+    let!(:car) { create(:car, :with_ownership) }
+    let(:ownership) { car.ownerships.first }
+    let(:person) { ownership.person }
+
+    scenario 'shows ownership history' do
+      within(".modal-body #car_#{car.id}") do
+        expect(page).to have_css 'h6', text: 'Ownership history'
+        expect(page).to have_css 'h6.fw-bold', text: person.name
+        expect(page).to have_css '.text-muted.fw-bold', text: ownership.purchased_at.strftime('%d %b %Y')
+      end
     end
   end
 

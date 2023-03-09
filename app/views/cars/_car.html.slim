@@ -1,14 +1,19 @@
 div id="#{dom_id car}"
-  p
-    strong Color:
-    =< car.color
-  p
-    strong Milage:
-    =< number_with_delimiter(car.milage, delimiter: ',')
-  - if car.owner.present?
-    p
-      strong Owner:
-      =< car.owner.name
-  p
-    strong Is for sale:
-    =< car.is_for_sale ? t('yes') : t('no')
+  .vstack.gap-3
+    .hstack.gap-3
+      = bootstrap_icon("palette2", width: 15, height: 15)
+      = car.color
+      - if car.is_for_sale
+        span.badge.bg-primary.text-end
+          = t('for_sale')
+    .hstack.gap-3
+      = bootstrap_icon("speedometer2", width: 15, height: 15)
+      = number_with_delimiter(car.milage, delimiter: ',')
+      =< t('miles')
+    - if car.owner.present?
+      .hstack.gap-3
+        = bootstrap_icon("person", width: 15, height: 15)
+        = car.owner.name
+
+    - if car.ownerships.any?
+      = render 'shared/ownership_history', parent: car

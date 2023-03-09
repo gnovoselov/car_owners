@@ -12,7 +12,7 @@ RSpec.describe 'Personal card', type: :feature, js: true do
 
   before do
     visit people_path
-    within('tr.person-row') do
+    within('tr.person-row:first-child') do
       find('.view-button').click
     end
     wait_for_popup
@@ -20,7 +20,22 @@ RSpec.describe 'Personal card', type: :feature, js: true do
 
   scenario 'shows person data' do
     within(".modal-body #person_#{person.id}") do
-      expect(page).to have_css 'p', text: person.email
+      expect(page).to have_css '.hstack', text: person.email
+      expect(page).not_to have_css 'h6', text: 'Ownership history'
+    end
+  end
+
+  context 'when a person has purchases in the past' do
+    let!(:person) { create(:person, :with_ownership) }
+    let(:ownership) { person.ownerships.first }
+    let(:car) { ownership.car }
+
+    scenario 'shows ownership history' do
+      within(".modal-body #person_#{person.id}") do
+        expect(page).to have_css 'h6', text: 'Ownership history'
+        expect(page).to have_css 'h6.fw-bold', text: "#{car.make} #{car.model} (#{car.color})"
+        expect(page).to have_css '.text-muted.fw-bold', text: ownership.purchased_at.strftime('%d %b %Y')
+      end
     end
   end
 

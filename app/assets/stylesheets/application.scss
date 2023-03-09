@@ -2,6 +2,7 @@ $primary: #51759B;
 $body-bg: #fcfcfc;
 
 @import "bootstrap";
+@import "timeline";
 
 textarea:focus, input:focus, .form-control:focus, .form-control.focus{
   outline: none !important;

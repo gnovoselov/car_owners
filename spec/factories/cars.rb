@@ -34,5 +34,11 @@ FactoryBot.define do
     trait :negative_milage do
       milage { -1 }
     end
+
+    trait :with_ownership do
+      after(:create) do |car|
+        create(:ownership, car:)
+      end
+    end
   end
 end

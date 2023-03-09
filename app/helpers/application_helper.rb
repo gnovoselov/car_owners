@@ -11,4 +11,18 @@ module ApplicationHelper
     button_to(destination, method: :get, class: "#{class_name} btn btn-link p-0",
                            data: { turbo_frame: 'modal', bs_toggle: 'modal', bs_target: '#modalDialog' }, &)
   end
+
+  def format_date(date)
+    return '' unless date
+
+    date.strftime('%d %b %Y')
+  end
+
+  def history_header(parent, ownership)
+    if parent.is_a?(Person)
+      "#{car_full_name(ownership.car)} (#{ownership.car.color})"
+    else
+      ownership.person.name
+    end
+  end
 end

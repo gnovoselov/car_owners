@@ -24,5 +24,11 @@ FactoryBot.define do
     trait :invalid_email do
       email { "#{generate(:email)}_invalid" }
     end
+
+    trait :with_ownership do
+      after(:create) do |person|
+        create(:ownership, person:)
+      end
+    end
   end
 end

@@ -57,4 +57,33 @@ RSpec.describe ApplicationHelper, type: :helper do
       )
     end
   end
+
+  describe '.format_date' do
+    let(:date) { Faker::Date.backward(days: 14) }
+
+    subject { helper.format_date(date) }
+
+    it { is_expected.to eq(date.strftime('%d %b %Y')) }
+
+    context 'when date is empty' do
+      let(:date) { nil }
+
+      it { is_expected.to eq('') }
+    end
+  end
+
+  describe '.history_header' do
+    let!(:parent) { create(:person, :with_ownership) }
+    let(:ownership) { parent.ownerships.first }
+
+    subject { helper.history_header(parent, ownership) }
+
+    it { is_expected.to eq("#{ownership.car.make} #{ownership.car.model} (#{ownership.car.color})") }
+
+    context 'when rendering history for a car' do
+      let!(:parent) { create(:car, :with_ownership) }
+
+      it { is_expected.to eq(ownership.person.name) }
+    end
+  end
 end

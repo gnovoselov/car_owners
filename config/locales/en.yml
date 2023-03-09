@@ -37,8 +37,10 @@ en:
   log_in: Log in
   remember_me: Remember me
   select_one: Select one...
+  for_sale: For sale
   sign_up: Sign up
   sign_out: Sign out
+  ownership_history: Ownership history
   please_sign_in: Please sign in
   forgot_your_password: Forgot your password?
   send_reset_password_instructions: Send me reset password instructions

@@ -1,7 +1,11 @@
 div id="#{dom_id person}"
-  p
-    strong Email:
-    =< person.email
-  p
-    strong Phone:
-    =< number_to_phone(person.phone)
+  .vstack.gap-3
+    .hstack.gap-3
+      = bootstrap_icon("at", width: 15, height: 15)
+      = person.email
+    .hstack.gap-3
+      = bootstrap_icon("telephone", width: 15, height: 15)
+      = number_to_phone(person.phone)
+
+    - if person.ownerships.any?
+      = render 'shared/ownership_history', parent: person

@@ -1,0 +1,21 @@
+.hstack.gap-3.align-items-start
+  = bootstrap_icon("clock-history", width: 15, height: 15)
+  div
+    h6
+      = t('ownership_history')
+    section.py-2.ms-2
+      ul.timeline
+        - parent.ownerships.each do |ownership|
+          li.timeline-item.mb-3
+            h6.fw-bold
+              = history_header(parent, ownership)
+            p.text-muted.fw-bold.mb-1
+              = format_date(ownership.purchased_at)
+            .vstack.gap-1
+              .hstack.gap-2.text-muted
+                = bootstrap_icon("speedometer2", width: 15, height: 15)
+                = number_with_delimiter(ownership.milage, delimiter: ',')
+                =< t('miles')
+              .hstack.gap-2.text-muted
+                = bootstrap_icon("currency-dollar", width: 15, height: 15)
+                = number_to_currency(ownership.price, unit: '')

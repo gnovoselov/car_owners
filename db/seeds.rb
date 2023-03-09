@@ -24,7 +24,7 @@ end
   current_ownership = FactoryBot.create(:ownership, car:, person:)
 
   # Let's say he could have several cars at once
-  rand(0..3).times do
+  rand(0..2).times do
     another_car = FactoryBot.create(:car, owner: person)
     person.update(cars: person.cars + [another_car])
     create_past_ownership(another_car, person, current_ownership.purchased_at)
@@ -32,7 +32,7 @@ end
 
   # And then he might have had other cars in the past
   # selecting from those in our database he never owned before
-  rand(1..10).times do
+  rand(1..5).times do
     person_cars = person.ownerships.map(&:car_id)
     available_car = Car.where.not(id: person_cars).order(Arel.sql('RAND()')).first
     break unless available_car

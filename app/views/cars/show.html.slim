@@ -1,2 +1,2 @@
-= render TurboModalComponent.new(title: "##{@car.id} #{car_full_name(@car)}") do
+= render TurboModalComponent.new(title: car_full_name(@car)) do
   == render @car
