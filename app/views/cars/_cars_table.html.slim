@@ -4,11 +4,8 @@
       thead
         tr
           th #
-          th = t('cars.table.headers.name')
-          th = t('cars.table.headers.color')
-          th = t('cars.table.headers.milage')
-          th = t('cars.table.headers.for_sale')
-          th = t('cars.table.headers.owner')
+          - cars_sorting_headers.each do |name|
+            th = render 'shared/sorted_header', path: cars_path(params: sorting_pagination_params(name)), domain: :cars, field: name
           th
       tbody#cars-table-body
         = render partial: "car_row", collection: cars, as: :car

@@ -24,6 +24,20 @@ class ApplicationController < ActionController::Base
     params[:page] || DEFAULT_PAGE
   end
 
+  def param_asc
+    ActiveModel::Type::Boolean.new.cast(params[:asc])
+  end
+
+  def sorting_direction
+    param_asc ? :asc : :desc
+  end
+
+  def sort_options
+    return { id: :desc } if params[:sort].blank?
+
+    { params[:sort] => sorting_direction }
+  end
+
   def load_collection_paginated(collection)
     paginate_collection(collection, param_page)
   rescue Pagy::OverflowError

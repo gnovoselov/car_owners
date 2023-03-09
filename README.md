@@ -57,12 +57,14 @@ Once the server is running, you can access the application at `http://localhost:
 
 ## TODO
 
-- Enable email confirmations for registration and password reqovery
-- Add dependent drop downs for car makes models
+- Enable email confirmations for registration and password recovery
+- Make cars sorting work via turbo frame
+- Add dependent drop downs for car makes and models
 - Add async select boxes with text search for long lists like car owners, makes and models
 - Allow owner creation from the Car form
 - Sell car functionality (create new ownership record, e.g., when changing owner while updating car)
 - Filter panels to search owners and cars at corresponding pages
-- store environment variables using .env
+- Store environment variables using .env
 - Create separate Docker configs for production
 - Add CircleCI config
+- Enable caching (Russian Doll?)

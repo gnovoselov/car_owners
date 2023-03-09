@@ -25,4 +25,20 @@ module ApplicationHelper
       ownership.person.name
     end
   end
+
+  def sorting_pagination_params(name)
+    {
+      page: params[:page] || 1,
+      sort: name,
+      asc: !bool_param(:asc)
+    }
+  end
+
+  def cars_sorting_headers
+    %i[name color milage is_for_sale owner]
+  end
+
+  def bool_param(name)
+    ActiveModel::Type::Boolean.new.cast(params[name])
+  end
 end

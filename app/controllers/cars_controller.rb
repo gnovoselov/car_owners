@@ -58,7 +58,20 @@ class CarsController < ApplicationController
   private
 
   def load_all_cars
-    load_collection_paginated(cars_collection.includes(:owner).all)
+    load_collection_paginated(cars_collection.includes(:owner).order(sort_options).all)
+  end
+
+  def sort_options
+    return { id: :asc } if params[:sort].blank?
+
+    case params[:sort]
+    when 'name'
+      { make: sorting_direction, model: sorting_direction }
+    when 'owner'
+      { 'people.name' => sorting_direction }
+    else
+      { params[:sort] => sorting_direction }
+    end
   end
 
   def render_error(format, action)

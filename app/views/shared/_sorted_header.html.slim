@@ -1,0 +1,5 @@
+= link_to path, class: "sort-#{field}-button btn btn-sm btn-light" do
+  .hstack.gap-1.fw-bold.fs-6
+    = t("#{domain}.table.headers.#{field}")
+    - if params[:sort] == field.to_s
+      = bootstrap_icon(bool_param(:asc) ? "sort-alpha-down" : 'sort-alpha-up', width: 15, height: 15)
