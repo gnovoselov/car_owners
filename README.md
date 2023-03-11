@@ -50,6 +50,22 @@ To upgrade outdated gems run
 $ docker-compose run app bundle-audit check --update
 ```
 
+### Code style
+
+To run static code analyzer please use the following command
+
+```bash
+$ docker-compose run app rubocop
+```
+
+### Testing
+
+Please find feature tests inside the `spec` folder. To run them use the following command
+
+```bash
+$ docker-compose run app rspec
+```
+
 ## Usage
 
 Once the server is running, you can access the application at `http://localhost:3000`.
